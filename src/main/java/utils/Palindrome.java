@@ -1,10 +1,7 @@
 package utils;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Palindrome {
@@ -21,28 +18,31 @@ public class Palindrome {
         FileUtils.writeToTxt(className, outputMessages);
     }
 
-    private void validatePalindrome(String inputPalindrome) {
+    private void validatePalindrome(String input) {
         List<Character> charactersFromInput = new ArrayList<>();
+        List<Character> reversedCharactersList = new ArrayList<>();
+        int notPolidrome = 0;
+        String formattedInput = input.toLowerCase().replaceAll("[^a-z]", "");
 
-        for (char c : inputPalindrome.toCharArray()) {
+        //adding each character from the string in a list
+        for (char c : formattedInput.toCharArray()) {
             charactersFromInput.add(c);
         }
 
-        List<Character> reversedCharactersList = new ArrayList<>();
-
+        //adding characters in a reversing order into a list
         for (int i = (charactersFromInput.size() - 1); i >= 0; i--) {
             reversedCharactersList.add(charactersFromInput.get(i));
         }
 
-        int notPolidrome = 0;
-
+        //checking if string is palindrome
         for (int i = 0; i < reversedCharactersList.size(); i++) {
             if (!reversedCharactersList.get(i).equals(charactersFromInput.get(i))) {
                 notPolidrome = 1;
                 break;
             }
         }
-        outputMessages.add(inputPalindrome + (notPolidrome < 1 ? " : is a polidrome" : " : is not a polidrome"));
+
+        outputMessages.add(String.format("[%s]: %s", input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
     }
 
 
