@@ -25,13 +25,13 @@ public class PalindromeTest {
         List<String> input = FileUtils.readFromTxt(className);
         SoftAssertions softAssertions = new SoftAssertions();
 
-        for (String s: input) {
+        input.forEach(s -> {
             softAssertions.assertThat(s).as(String.format("{%s} is not empty", s)).isNotEmpty();
 
             softAssertions.assertThat(s.toCharArray().length).as(String.format("{%s} is at least 3 characters long!", s)).isGreaterThan(2);
 
             softAssertions.assertThat(s).as(String.format("{%s} does not contain digits", s)).doesNotContainPattern("[0-9]");
-        }
+        });
 
         softAssertions.assertAll();
     }
