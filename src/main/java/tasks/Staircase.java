@@ -1,37 +1,63 @@
 package tasks;
 
-import utils.FileUtils;
+import org.assertj.core.api.SoftAssertions;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Staircase {
+import static tasks.StringStore.assertMessage;
+import static tasks.StringStore.wrongInputMessage;
+
+public class Staircase implements BaseTask {
 
     private List<String> outputMessages = new ArrayList<>();
 
-    private String className = Staircase.class.getSimpleName();
+    private String inputFileName = getInputFileName(getClass());
 
-    public void readInput() throws IOException {
-        List<String> input = FileUtils.readFromTxt(className);
+    public void resolveTask() throws IOException {
+        List<String> input = readInput(inputFileName);
 
-        input.forEach(p -> drawStaircase(Integer.parseInt(p)));
+        input.forEach(p -> drawStaircase(p));
 
-        FileUtils.writeToTxt(className, outputMessages);
+        writeResults(inputFileName, outputMessages);
     }
 
-    private void drawStaircase(int staircaseHeight) {
-        String output = "";
+    public void drawStaircase(String staircaseHeight) {
+        List<String> assertMessages = validateInputLine(staircaseHeight);
 
-        for (int i = 0; i < staircaseHeight; i++) {
-            for (int j = 0; j <= i; j++) {
-                output = output.concat("#");
+        if (assertMessages.size() == 0) {
+            String output = "";
+
+            for (int i = 0; i < Integer.parseInt(staircaseHeight); i++) {
+                for (int j = 0; j <= i; j++) {
+                    output = output.concat("#");
+                }
+                output = output.concat("\n");
             }
-            output = output.concat("\n");
-        }
 
-        outputMessages.add(String.format("For n = [%s], the output is:\n%s", staircaseHeight, output));
+            outputMessages.add(String.format("For n = [%s], the output is:\n%s", staircaseHeight, output));
+        } else {
+            outputMessages.add(String.format(wrongInputMessage, staircaseHeight));
+            for (String errorMessage : assertMessages) {
+                outputMessages.add(String.format(assertMessage, staircaseHeight, errorMessage));
+            }
+        }
     }
 
+    public List<String> validateInputLine(String staircaseHeight) {
+        List<String> assertMessages = new ArrayList<>();
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(isStringInteger(staircaseHeight))
+                .as("Staircase height is an integer!")
+                .isTrue();
+
+        softAssertions.assertThat(Integer.parseInt(staircaseHeight))
+                .as("Staircase height is greater than or equals to 2!")
+                .isGreaterThanOrEqualTo(2);
+
+        return collectErrorMessages(softAssertions, assertMessages);
+    }
 
 }
