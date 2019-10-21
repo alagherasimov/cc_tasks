@@ -1,14 +1,15 @@
-package utils;
+package tasks;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tasks.Staircase;
+import utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -30,9 +31,9 @@ public class StaircaseTest {
 
         input.forEach(p -> {
 
-            assertTrue(String.format("Staircase height {%s} is an integer", p), isInteger(p));
+            assertTrue(String.format("Staircase height {%s} is an integer!", p), isInteger(p));
 
-            softAssertions.assertThat(Integer.parseInt(p)).as("Staircase height is greater than or equals to 2").isGreaterThanOrEqualTo(2);
+            softAssertions.assertThat(Integer.parseInt(p)).as("Staircase height is greater than or equals to 2!").isGreaterThanOrEqualTo(2);
         });
 
         softAssertions.assertAll();

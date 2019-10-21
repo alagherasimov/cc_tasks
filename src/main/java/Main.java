@@ -1,6 +1,6 @@
-import utils.FileUtils;
-import utils.Palindrome;
-import utils.Staircase;
+import tasks.InverseFloatingArray;
+import tasks.Palindrome;
+import tasks.Staircase;
 
 import java.io.IOException;
 
@@ -13,6 +13,9 @@ public class Main {
 
         Staircase staircase = new Staircase();
         staircase.readInput();
+
+        InverseFloatingArray inverseArray = new InverseFloatingArray();
+        inverseArray.readInput();
 
     }
 
