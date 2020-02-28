@@ -1,48 +1,80 @@
 package tasks;
 
-import utils.FileUtils;
+import org.assertj.core.api.SoftAssertions;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Palindrome {
+import static tasks.StringStore.assertMessage;
+import static tasks.StringStore.wrongInputMessage;
+
+public class Palindrome implements BaseTask {
 
     private List<String> outputMessages = new ArrayList<>();
 
-    private String className = Palindrome.class.getSimpleName();
+    private String inputFileName = getInputFileName(getClass());
 
-    public void readInput() throws IOException {
-        List<String> input = FileUtils.readFromTxt(className);
+    public void resolveTask() throws IOException {
+        List<String> input = readInput(inputFileName);
 
-        input.forEach(this::validatePalindrome);
+        input.forEach(this::checkForPalinfrome);
 
-        FileUtils.writeToTxt(className, outputMessages);
+        writeResults(inputFileName, outputMessages);
     }
 
-    private void validatePalindrome(String input) {
+    private void checkForPalinfrome(String input) {
         List<Character> charactersFromInput = new ArrayList<>();
-        String formattedInput = input.toLowerCase().replaceAll("[^a-z]", "");
-        int notPolidrome = 0;
+        List<String> assertMessages = validateInputLine(input);
 
-        //adding each character from the string in a list
-        for (char c : formattedInput.toCharArray()) {
-            charactersFromInput.add(c);
-        }
+        if (assertMessages.size() == 0) {
 
-        int forward = 0;
-        int backward = charactersFromInput.size() - 1;
+            String formattedInput = input.toLowerCase().replaceAll("[^a-z]", "");
+            int notPolidrome = 0;
 
-        //checking if string is palindrome
-        while(forward < backward){
-            if(charactersFromInput.get(forward++) != charactersFromInput.get(backward--)){
-                notPolidrome = 1;
-                break;
+            //adding each character from the string in a list
+            for (char c : formattedInput.toCharArray()) {
+                charactersFromInput.add(c);
+            }
+
+            int forward = 0;
+            int backward = charactersFromInput.size() - 1;
+
+            //checking if string is palindrome
+            while (forward < backward) {
+                if (charactersFromInput.get(forward++) != charactersFromInput.get(backward--)) {
+                    notPolidrome = 1;
+                    break;
+                }
+            }
+
+            outputMessages.add(String.format("[%s]: %s", input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
+        } else {
+            outputMessages.add(String.format(wrongInputMessage, input));
+            for (String errorMessage : assertMessages) {
+                outputMessages.add(String.format(assertMessage, input, errorMessage));
             }
         }
-
-        outputMessages.add(String.format("[%s]: %s", input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
     }
 
+    public List<String> validateInputLine(String line) {
+
+        List<String> assertMessages = new ArrayList<>();
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(line)
+                .as(String.format("{%s} is not empty!", line))
+                .isNotEmpty();
+
+        softAssertions.assertThat(line.toCharArray().length)
+                .as(String.format("{%s} is at least 3 characters long!", line))
+                .isGreaterThan(2);
+
+        softAssertions.assertThat(line)
+                .as(String.format("{%s} does not contain digits!", line))
+                .doesNotContainPattern("[0-9]");
+
+        return collectErrorMessages(softAssertions, assertMessages);
+    }
 
 }
