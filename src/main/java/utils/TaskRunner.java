@@ -7,8 +7,7 @@ import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 import java.lang.reflect.Method;
 
-public class
-TaskRunner extends Runner {
+public class TaskRunner extends Runner {
 
     private Class runClass;
 

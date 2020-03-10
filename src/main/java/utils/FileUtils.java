@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.StringConstants.*;
+
 public class FileUtils {
 
     public List<String> readFromTxt(String className) throws IOException {
@@ -18,7 +20,15 @@ public class FileUtils {
 
         //saving each line from input file into a list
         while ((line = bufferedReader.readLine()) != null) {
-            inputStringList.add(line);
+            if (line.equalsIgnoreCase(startReadingMatrix)) {
+                String tempLine = emptyString;
+                while (!(line = bufferedReader.readLine()).equalsIgnoreCase(endReadingMatrix)) {
+                    tempLine = tempLine + line + "\n";
+                }
+                inputStringList.add(tempLine);
+            } else {
+                inputStringList.add(line);
+            }
         }
 
         bufferedReader.close();

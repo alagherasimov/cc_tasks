@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.StringConstants.assertMessage;
-import static utils.StringConstants.wrongInputMessage;
+import static utils.StringConstants.*;
 
 public class Staircase implements BaseTask {
 
@@ -36,9 +35,9 @@ public class Staircase implements BaseTask {
     }
 
     public void drawStaircase(String staircaseHeight) {
-        List<String> assertMessages = validateInputLine(staircaseHeight);
+        String errorMessage = validateInputLine(staircaseHeight);
 
-        if (assertMessages.size() == 0) {
+        if (errorMessage.equals(emptyString)) {
             String output = "";
 
             for (int i = 0; i < Integer.parseInt(staircaseHeight); i++) {
@@ -50,26 +49,23 @@ public class Staircase implements BaseTask {
 
             outputMessages.add(String.format("For n = [%s], the output is:\n%s", staircaseHeight, output));
         } else {
-            outputMessages.add(String.format(wrongInputMessage, staircaseHeight));
-            for (String errorMessage : assertMessages) {
-                outputMessages.add(String.format(assertMessage, staircaseHeight, errorMessage));
-            }
+            outputMessages.add(String.format(wrongInputMessage, staircaseHeight, errorMessage));
         }
     }
 
-    public List<String> validateInputLine(String staircaseHeight) {
-        List<String> assertMessages = new ArrayList<>();
+
+    public String validateInputLine(String staircaseHeight) {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(isStringInteger(staircaseHeight))
-                .as("Staircase height is an integer!")
+                .as("Staircase height is not an integer!")
                 .isTrue();
 
         softAssertions.assertThat(Integer.parseInt(staircaseHeight))
-                .as("Staircase height is greater than or equals to 2!")
+                .as("Staircase height is not greater than or equals to 2!")
                 .isGreaterThanOrEqualTo(2);
 
-        return collectErrorMessages(softAssertions, assertMessages);
+        return collectErrorMessages(softAssertions);
     }
 
 }
