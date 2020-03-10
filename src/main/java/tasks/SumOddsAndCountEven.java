@@ -1,3 +1,7 @@
+/**
+ * 5. Given an array of integers, determine the sum of odd numbers
+ * and the amount of even numbers
+ */
 package tasks;
 
 import org.assertj.core.api.SoftAssertions;
@@ -6,8 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tasks.StringStore.assertMessage;
-import static tasks.StringStore.wrongInputMessage;
+import static utils.StringConstants.assertMessage;
+import static utils.StringConstants.wrongInputMessage;
 
 public class SumOddsAndCountEven implements BaseTask {
 

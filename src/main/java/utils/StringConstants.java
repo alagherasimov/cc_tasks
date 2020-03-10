@@ -1,6 +1,6 @@
-package tasks;
+package utils;
 
-public class StringStore {
+public class StringConstants {
 
     public static String taskInputPath = "src/main/resources/input/";
 

@@ -1,3 +1,10 @@
+/**
+ * 1. Given a string of characters, determine if it is a palindrome or not
+ * https://en.wikipedia.org/wiki/Palindrome
+ * ABABA - palindrome
+ * BABA - not palindrome
+ */
+
 package tasks;
 
 import org.assertj.core.api.SoftAssertions;
@@ -6,8 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tasks.StringStore.assertMessage;
-import static tasks.StringStore.wrongInputMessage;
+import static utils.StringConstants.assertMessage;
+import static utils.StringConstants.wrongInputMessage;
 
 public class Palindrome implements BaseTask {
 
@@ -48,7 +55,7 @@ public class Palindrome implements BaseTask {
                 }
             }
 
-            outputMessages.add(String.format("[%s]: %s", input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
+            outputMessages.add(String.format(assertMessage, input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
         } else {
             outputMessages.add(String.format(wrongInputMessage, input));
             for (String errorMessage : assertMessages) {

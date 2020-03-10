@@ -1,4 +1,4 @@
-package tasks;
+package utils;
 
 public class NumericUtils {
 

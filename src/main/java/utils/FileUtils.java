@@ -7,12 +7,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import tasks.StringStore;
-
 public class FileUtils {
 
     public List<String> readFromTxt(String className) throws IOException {
-        File file = new File(Paths.get(StringStore.taskInputPath + className.toLowerCase() + ".txt").toUri());
+        File file = new File(Paths.get(StringConstants.taskInputPath + className.toLowerCase() + ".txt").toUri());
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         List<String> inputStringList = new ArrayList<>();
@@ -29,7 +27,7 @@ public class FileUtils {
     }
 
     public void writeToTxt(String className, List<String> messages) throws IOException {
-        File directory = new File(Paths.get(StringStore.taskOutputPath).toUri());
+        File directory = new File(Paths.get(StringConstants.taskOutputPath).toUri());
 
         //create a folder if it doesn't exists
         directory.mkdirs();
