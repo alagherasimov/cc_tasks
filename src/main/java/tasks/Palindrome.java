@@ -1,3 +1,10 @@
+/**
+ * 1. Given a string of characters, determine if it is a palindrome or not
+ * https://en.wikipedia.org/wiki/Palindrome
+ * ABABA - palindrome
+ * BABA - not palindrome
+ */
+
 package tasks;
 
 import org.assertj.core.api.SoftAssertions;
@@ -6,8 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tasks.StringStore.assertMessage;
-import static tasks.StringStore.wrongInputMessage;
+import static utils.StringConstants.*;
 
 public class Palindrome implements BaseTask {
 
@@ -25,10 +31,9 @@ public class Palindrome implements BaseTask {
 
     private void checkForPalinfrome(String input) {
         List<Character> charactersFromInput = new ArrayList<>();
-        List<String> assertMessages = validateInputLine(input);
+        String errorMessage = validateInputLine(input);
 
-        if (assertMessages.size() == 0) {
-
+        if (errorMessage.equals(emptyString)) {
             String formattedInput = input.toLowerCase().replaceAll("[^a-z]", "");
             int notPolidrome = 0;
 
@@ -48,33 +53,28 @@ public class Palindrome implements BaseTask {
                 }
             }
 
-            outputMessages.add(String.format("[%s]: %s", input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
+            outputMessages.add(String.format(resultMessage, input, (notPolidrome < 1 ? "is a palindrome" : "is not a palindrome")));
         } else {
-            outputMessages.add(String.format(wrongInputMessage, input));
-            for (String errorMessage : assertMessages) {
-                outputMessages.add(String.format(assertMessage, input, errorMessage));
-            }
+            outputMessages.add(String.format(wrongInputMessage, input, errorMessage));
         }
     }
 
-    public List<String> validateInputLine(String line) {
-
-        List<String> assertMessages = new ArrayList<>();
+    public String validateInputLine(String line) {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(line)
-                .as(String.format("{%s} is not empty!", line))
+                .as(String.format("{%s} is empty!", line))
                 .isNotEmpty();
 
         softAssertions.assertThat(line.toCharArray().length)
-                .as(String.format("{%s} is at least 3 characters long!", line))
+                .as(String.format("{%s} is not 3 characters long!", line))
                 .isGreaterThan(2);
 
         softAssertions.assertThat(line)
-                .as(String.format("{%s} does not contain digits!", line))
+                .as(String.format("{%s} should not contain digits!", line))
                 .doesNotContainPattern("[0-9]");
 
-        return collectErrorMessages(softAssertions, assertMessages);
+        return collectErrorMessages(softAssertions);
     }
 
 }

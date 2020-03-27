@@ -1,3 +1,8 @@
+/**
+ * 4. Given an array of integers, implement the BubbleSort algorithm
+ * for sorting the elements of the array
+ */
+
 package tasks;
 
 import org.assertj.core.api.SoftAssertions;
@@ -6,8 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tasks.StringStore.assertMessage;
-import static tasks.StringStore.wrongInputMessage;
+import static utils.StringConstants.*;
 
 public class BubbleSort implements BaseTask {
 
@@ -24,9 +28,9 @@ public class BubbleSort implements BaseTask {
     }
 
     public void sort(String line) {
-        List<String> assertMessages = validateInputLine(line);
+        String errorMessage = validateInputLine(line);
 
-        if (assertMessages.size() == 0) {
+        if (errorMessage.equals(emptyString)) {
             int[] intArray = parseStringToIntArray(line);
             int temp;
             int isNotSorted = 0;
@@ -46,32 +50,29 @@ public class BubbleSort implements BaseTask {
             if (isNotSorted == 0) {
                 outputMessages.add(String.format("[%s]: Is already sorted!", line));
             } else {
-                outputMessages.add(String.format("Input array: %s\nSorted array: %s", line, saveIntArrayAsString(intArray)));
+                outputMessages.add(String.format(resultingArrayMessage, line, saveIntArrayAsString(intArray)));
             }
         } else {
-            outputMessages.add(String.format(wrongInputMessage, line));
-            for (String errorMessage : assertMessages) {
-                outputMessages.add(String.format(assertMessage, line, errorMessage));
-            }
+            outputMessages.add(String.format(wrongInputMessage, line, errorMessage));
         }
     }
 
-    public List<String> validateInputLine(String line) {
-        List<String> assertMessages = new ArrayList<>();
+
+    public String validateInputLine(String line) {
         SoftAssertions softAssertions = new SoftAssertions();
 
         String[] inputArray = line.split(" ", -1);
 
         for (int i = 0; i < inputArray.length; i++) {
             softAssertions.assertThat(isStringInteger(inputArray[i]))
-                    .as(String.format("{%s} is numeric", inputArray[i]))
+                    .as(String.format("{%s} is not numeric!", inputArray[i]))
                     .isTrue();
         }
 
         softAssertions.assertThat(inputArray.length)
-                .as("Array size is equal or greater than 3!")
+                .as("Array size is not equal or greater than 3!")
                 .isGreaterThanOrEqualTo(3);
 
-        return collectErrorMessages(softAssertions, assertMessages);
+        return collectErrorMessages(softAssertions);
     }
 }

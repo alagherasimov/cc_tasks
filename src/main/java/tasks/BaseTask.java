@@ -2,9 +2,12 @@ package tasks;
 
 import org.assertj.core.api.SoftAssertions;
 import utils.FileUtils;
+import utils.NumericUtils;
 
 import java.io.IOException;
 import java.util.List;
+
+import static utils.StringConstants.emptyString;
 
 public interface BaseTask {
 
@@ -14,7 +17,7 @@ public interface BaseTask {
 
     void resolveTask() throws IOException;
 
-    List<String> validateInputLine(String inputLine);
+    String validateInputLine(String inputLine);
 
     default String getInputFileName(Class obj) {
         return obj.getSimpleName();
@@ -28,11 +31,12 @@ public interface BaseTask {
         fileUtils.writeToTxt(className, messages);
     }
 
-    default List<String> collectErrorMessages(SoftAssertions softAssertions, List<String> assertMessagesList) {
+    default String collectErrorMessages(SoftAssertions softAssertions) {
+        String assertMessages = emptyString;
         for (Throwable errors : softAssertions.errorsCollected()) {
-            assertMessagesList.add(errors.getMessage().split("\r\n")[0].replaceAll("[\\[\\]\"]", ""));
+            assertMessages = assertMessages + errors.getMessage().split("\r\n")[0].replaceAll("[\\[\\]\"]", "");
         }
-        return assertMessagesList;
+        return assertMessages;
     }
 
     default boolean isStringInteger(String input){
@@ -49,6 +53,10 @@ public interface BaseTask {
 
     default int[] parseStringToIntArray(String line){
         return  numericUtils.parseStringToIntArray(line);
+    }
+
+    default int[][] parseStringToBidimensionalArrayOfIntegers(String line){
+        return numericUtils.parseStringToBidimensionalArrayOfIntegers(line);
     }
 
 }

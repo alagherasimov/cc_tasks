@@ -1,4 +1,4 @@
-package tasks;
+package utils;
 
 public class NumericUtils {
 
@@ -11,7 +11,7 @@ public class NumericUtils {
         return true;
     }
 
-   public boolean isStringInteger(String stringNumber) {
+    public boolean isStringInteger(String stringNumber) {
         try {
             Integer.parseInt(stringNumber);
         } catch (NumberFormatException | NullPointerException nfe) {
@@ -35,6 +35,21 @@ public class NumericUtils {
             intArray[i] = Integer.parseInt(inputArray[i]);
         }
         return intArray;
+    }
+
+    public int[][] parseStringToBidimensionalArrayOfIntegers(String line) {
+        String rows[] = line.split("\n");
+        int numberOfRows = rows.length;
+        int numberOfColumns = rows[0].split(" ").length;
+        int bidimensionalArray[][] = new int[numberOfRows][numberOfColumns];
+
+        for (int row = 0; row < numberOfRows; row++) {
+            String columnsFromRow[] = rows[row].split(" ");
+            for (int column = 0; column < numberOfColumns; column++) {
+                bidimensionalArray[row][column] = Integer.parseInt(columnsFromRow[column]);
+            }
+        }
+        return bidimensionalArray;
     }
 
 }
