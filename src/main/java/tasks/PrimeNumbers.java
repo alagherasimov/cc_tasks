@@ -35,7 +35,6 @@ public class PrimeNumbers implements BaseTask {
                 for (int i = j; i >= 1; i--) {
                     if (j % i == 0) {
                         counter++;
-
                     }
                 }
                 if (counter == 2) {

@@ -59,4 +59,8 @@ public interface BaseTask {
         return numericUtils.parseStringToBidimensionalArrayOfIntegers(line);
     }
 
+    default int[] parseStringWithSeveralLinesToArrayOfIntegers(String line){
+        return numericUtils.parseStringWithSeveralLinesToArrayOfIntegers(line);
+    }
+
 }

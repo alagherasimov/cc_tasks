@@ -22,8 +22,8 @@ public class NumericUtils {
 
     public String saveIntArrayAsString(int[] intArray) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < intArray.length; i++) {
-            stringBuilder.append(String.format("%d ", intArray[i]));
+        for (int value : intArray) {
+            stringBuilder.append(String.format("%d ", value));
         }
         return stringBuilder.toString();
     }
@@ -50,6 +50,17 @@ public class NumericUtils {
             }
         }
         return bidimensionalArray;
+    }
+
+    public int[] parseStringWithSeveralLinesToArrayOfIntegers(String line){
+        String initialString[] = line.replace("\n", " ").split(" ");
+        int array[] = new int[initialString.length];
+
+        for(int index = 0; index < initialString.length; index++){
+            array[index] = Integer.parseInt(initialString[index]);
+        }
+
+        return array;
     }
 
 }

@@ -38,13 +38,19 @@ public class Staircase implements BaseTask {
         String errorMessage = validateInputLine(staircaseHeight);
 
         if (errorMessage.equals(emptyString)) {
-            String output = "";
+            StringBuilder output = new StringBuilder();;
+            int height = Integer.parseInt(staircaseHeight);
 
-            for (int i = 0; i < Integer.parseInt(staircaseHeight); i++) {
-                for (int j = 0; j <= i; j++) {
-                    output = output.concat("#");
+            for (int i = 0; i < height; i++) {
+
+                for(int empty = 1; empty < height - i; empty++){
+                    output.append(" ");
                 }
-                output = output.concat("\n");
+
+                for (int j = (height - i); j <= height; j++) {
+                    output.append("#");
+                }
+                output.append("\n");
             }
 
             outputMessages.add(String.format("For n = [%s], the output is:\n%s", staircaseHeight, output));
