@@ -22,4 +22,6 @@ public class StringConstants {
 
     public static String endReadingMatrix = "END_MATRIX";
 
+    public static String delimeter = "\\|";
+
 }

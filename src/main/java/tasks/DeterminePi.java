@@ -21,8 +21,6 @@ public class DeterminePi implements BaseTask {
 
     private String inputFileName = getInputFileName(getClass());
 
-    private DecimalFormat decimalFormat = new DecimalFormat("0.000000000000000");
-
     public void resolveTask() throws IOException {
         List<String> input = readInput(inputFileName);
 
@@ -36,8 +34,15 @@ public class DeterminePi implements BaseTask {
 
         if (errorMessage.equals(emptyString)) {
             BigDecimal pi = BigDecimal.ZERO;
+            StringBuilder printingPattern = new StringBuilder();
             int decimalX = 1;
             int inputN = Integer.parseInt(input);
+
+            //forming the printing pattern
+            printingPattern.append("0.");
+            for(int z = 1; z <= inputN; z++){
+                printingPattern.append("0");
+            }
 
             for (int j = 0; j <= inputN; j++) {
                 decimalX *= 10;
@@ -48,7 +53,7 @@ public class DeterminePi implements BaseTask {
                 if (i == 1) pi = pi.multiply(BigDecimal.valueOf(4.0));
             }
 
-            outputMessages.add(String.format("[%d]: Pi with an error less than %d digits is: %s", inputN, inputN, decimalFormat.format(pi)));
+            outputMessages.add(String.format("[%d]: Pi with an error less than %d digits is: %s", inputN, inputN, new DecimalFormat(printingPattern.toString()).format(pi)));
         } else {
             outputMessages.add(String.format(wrongInputMessage, input, errorMessage));
         }

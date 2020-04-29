@@ -16,6 +16,14 @@ public class Runner {
     DeterminePi determinePiTask = new DeterminePi();
     MagicalSquare magicalSquareTask = new MagicalSquare();
     PrimeNumbers primeNumbersTask = new PrimeNumbers();
+    FriendlyNumbers friendlyNumbersTask = new FriendlyNumbers();
+    LeapYears leapYearsTask = new LeapYears();
+    MergeThreeArraysInOneSorted mergeThreeArraysInOneSortedTask = new MergeThreeArraysInOneSorted();
+    SortMatrixBySumOnLines sortMatrixBySumOnLinesTask = new SortMatrixBySumOnLines();
+    RotateListByNElements rotateListByNElementsTask = new RotateListByNElements();
+    MinimumAmountOfCoins minimumAmountOfCoinsTask = new MinimumAmountOfCoins();
+    RotateBidimensionalArrayClockwise rotateBidimensionalArrayClockwiseTask = new RotateBidimensionalArrayClockwise();
+    DoubleOrAddToGetAmount doubleOrAddToGetAmountTask = new DoubleOrAddToGetAmount();
 
     @Ignore
     @Test
@@ -28,6 +36,14 @@ public class Runner {
         determinePiTask.resolveTask();
         magicalSquareTask.resolveTask();
         primeNumbersTask.resolveTask();
+        friendlyNumbersTask.resolveTask();
+        leapYearsTask.resolveTask();
+        mergeThreeArraysInOneSortedTask.resolveTask();
+        sortMatrixBySumOnLinesTask.resolveTask();
+        rotateListByNElementsTask.resolveTask();
+        minimumAmountOfCoinsTask.resolveTask();
+        rotateBidimensionalArrayClockwiseTask.resolveTask();
+        doubleOrAddToGetAmountTask.resolveTask();
     }
 
     @Ignore
@@ -76,6 +92,54 @@ public class Runner {
     @Test
     public void runPrimeNumbersTask() throws IOException {
         primeNumbersTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runFriendlyNumbersTask() throws IOException {
+        friendlyNumbersTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runLeapYearsTask() throws IOException {
+        leapYearsTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runMergeThreeArraysInOneSortedTask() throws IOException {
+        mergeThreeArraysInOneSortedTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runSortMatrixBySumOnLinesTaskTask() throws IOException {
+        sortMatrixBySumOnLinesTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runRotateListByNElementsTask() throws IOException {
+        rotateListByNElementsTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runMinimumAmountOfCoinsTask() throws IOException {
+        minimumAmountOfCoinsTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runRotateBidimensionalArrayClockwiseTask() throws IOException {
+        rotateBidimensionalArrayClockwiseTask.resolveTask();
+    }
+
+    @Ignore
+    @Test
+    public void runDoubleOrAddToGetAmountTask() throws IOException {
+        doubleOrAddToGetAmountTask.resolveTask();
     }
 
 }
