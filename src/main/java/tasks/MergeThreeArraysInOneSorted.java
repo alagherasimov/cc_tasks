@@ -35,32 +35,78 @@ public class MergeThreeArraysInOneSorted implements BaseTask {
         String errorMessage = validateInputLine(input);
 
         if (errorMessage.equals(emptyString)) {
-            int inputArray[] = parseStringWithSeveralLinesToArrayOfIntegers(input);
-            int temp;
+            List<int[]> listOfInputArrays = parseStringsToListOfIntegerArrays(input);
 
-            for (int i = 0; i < inputArray.length - 1; i++) {
-                for (int j = 0; j < (inputArray.length - i - 1); j++) {
-                    if (inputArray[j] > inputArray[j + 1]) {
-                        temp = inputArray[j + 1];
-                        inputArray[j + 1] = inputArray[j];
-                        inputArray[j] = temp;
-                    }
-                }
-            }
-            outputMessages.add(String.format(resultingArrayMessage, input.substring(0, input.toCharArray().length - 1), saveIntArrayAsString(inputArray)));
+            String tempResultForFirstTwoArraysMerged = mergeTwoSortedArrays(listOfInputArrays.get(0), listOfInputArrays.get(1));
+            String result = mergeTwoSortedArrays(parseStringToIntArray(tempResultForFirstTwoArraysMerged), listOfInputArrays.get(2));
+
+            outputMessages.add(String.format(resultingArrayMessage, input.substring(0, input.toCharArray().length - 1), result));
         } else {
             outputMessages.add(String.format(wrongInputMessage, input.substring(0, input.toCharArray().length - 1), errorMessage));
         }
 
     }
 
+    private String mergeTwoSortedArrays(int[] firstArray, int[] secondArray) {
+        int firstIndex = 0;
+        int secondIndex = 0;
+        StringBuilder tempStringBuilder = new StringBuilder();
+
+        while (firstIndex < firstArray.length && secondIndex < secondArray.length) {
+            if (firstArray[firstIndex] < secondArray[secondIndex]) {
+                tempStringBuilder.append(firstArray[firstIndex] + " ");
+                firstIndex++;
+            } else {
+                tempStringBuilder.append(secondArray[secondIndex] + " ");
+                secondIndex++;
+            }
+        }
+
+        while (firstIndex < firstArray.length) {
+            tempStringBuilder.append(firstArray[firstIndex] + " ");
+            firstIndex++;
+        }
+
+        while (secondIndex < secondArray.length) {
+            tempStringBuilder.append(secondArray[secondIndex] + " ");
+            secondIndex++;
+        }
+
+        return tempStringBuilder.toString().substring(0, tempStringBuilder.lastIndexOf(" "));
+    }
+
     public String validateInputLine(String line) {
         SoftAssertions softAssertions = new SoftAssertions();
         int inputArray[] = parseStringWithSeveralLinesToArrayOfIntegers(line);
+        List<int[]> listOfArrays = parseStringsToListOfIntegerArrays(line);
+        int numberOfArrays = listOfArrays.size();
 
-        softAssertions.assertThat(inputArray.length)
-                .as("Arrays length should be greater than 3!")
-                .isGreaterThan(3);
+        for (int index = 0; index < numberOfArrays; index++) {
+            String array = saveIntArrayAsString(listOfArrays.get(index));
+            softAssertions.assertThat(listOfArrays.get(index).length)
+                    .as("Array {%s} length is not greater or equal to 2!", array.substring(0, array.lastIndexOf(" ")))
+                    .isGreaterThanOrEqualTo(2);
+
+            boolean isSorted = true;
+            int[] tempArray = listOfArrays.get(index);
+            for (int elementIndex = 0; elementIndex < tempArray.length; elementIndex++) {
+                if (elementIndex != (tempArray.length - 1)) {
+                    if (tempArray[elementIndex + 1] < tempArray[elementIndex]) {
+                        isSorted = false;
+                        break;
+                    }
+                }
+            }
+
+            softAssertions.assertThat(isSorted)
+                    .as(String.format("Array {%s} is not sorted!", array.substring(0, array.lastIndexOf(" "))))
+                    .isTrue();
+
+        }
+
+        softAssertions.assertThat(numberOfArrays)
+                .as(String.format("There should be 3 arrays for this task, not %s!", numberOfArrays))
+                .isEqualTo(3);
 
         for (int i = 0; i < inputArray.length; i++) {
             softAssertions.assertThat(isStringInteger(String.valueOf(inputArray[i])))

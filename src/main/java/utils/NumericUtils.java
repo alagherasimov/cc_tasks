@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NumericUtils {
 
     public boolean isStringFloat(String stringNumber) {
@@ -52,15 +55,27 @@ public class NumericUtils {
         return bidimensionalArray;
     }
 
-    public int[] parseStringWithSeveralLinesToArrayOfIntegers(String line){
+    public int[] parseStringWithSeveralLinesToArrayOfIntegers(String line) {
         String initialString[] = line.replace("\n", " ").split(" ");
         int array[] = new int[initialString.length];
 
-        for(int index = 0; index < initialString.length; index++){
+        for (int index = 0; index < initialString.length; index++) {
             array[index] = Integer.parseInt(initialString[index]);
         }
 
         return array;
+    }
+
+    public List<int[]> parseStringsToListOfIntegerArrays(String line) {
+        List<int[]> listOfIntegerArrays = new ArrayList<>();
+        String[] listOfInputStrings = line.split("\n");
+
+        for (int index = 0; index < listOfInputStrings.length; index++) {
+            int[] tempArray = parseStringToIntArray(listOfInputStrings[index]);
+            listOfIntegerArrays.add(tempArray);
+        }
+
+        return listOfIntegerArrays;
     }
 
 }

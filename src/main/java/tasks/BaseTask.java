@@ -63,4 +63,8 @@ public interface BaseTask {
         return numericUtils.parseStringWithSeveralLinesToArrayOfIntegers(line);
     }
 
+    default List<int[]> parseStringsToListOfIntegerArrays(String line){
+        return numericUtils.parseStringsToListOfIntegerArrays(line);
+    }
+
 }
